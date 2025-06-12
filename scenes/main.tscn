@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b17nrm0csr353"]
+
+[ext_resource type="Script" uid="uid://cfc1f2tg32rts" path="res://scenes/main.gd" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://diblb1injdxb8" path="res://scenes/badges.tscn" id="2_0wfyh"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_o5qli")
+
+[node name="Badges" parent="." instance=ExtResource("2_0wfyh")]
+unique_name_in_owner = true
