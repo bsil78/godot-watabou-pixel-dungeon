@@ -1,0 +1,124 @@
+[gd_scene load_steps=14 format=3 uid="uid://diblb1injdxb8"]
+
+[ext_resource type="Script" uid="uid://drc3wg0xq7icf" path="res://scenes/main_screen/main_screen.gd" id="1_84mke"]
+[ext_resource type="StyleBox" uid="uid://cy4lcmrcnt1gy" path="res://syles/style_debug_panel.tres" id="2_1edld"]
+[ext_resource type="PackedScene" uid="uid://bpgxrp7si8vvb" path="res://scenes/main_screen/title_screen.tscn" id="3_ojtip"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b0x3g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ip65t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fkecd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qdyj5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_polw3"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_de5gq"]
+load_path = "res://.godot/imported/icons.png-bee93322a617e5fe670331de2acd3918.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1qcct"]
+atlas = SubResource("CompressedTexture2D_de5gq")
+region = Rect2(30, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsohy"]
+atlas = SubResource("CompressedTexture2D_de5gq")
+region = Rect2(98, 0, 17, 15)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_de5gq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1qcct"]
+font_size = 8
+
+[node name="MainScreen" type="Control"]
+custom_minimum_size = Vector2(412, 915)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_84mke")
+
+[node name="Panel" type="Panel" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_1edld")
+
+[node name="TitleScreen" parent="." instance=ExtResource("3_ojtip")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_b0x3g")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ip65t")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_fkecd")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_qdyj5")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_polw3")
+
+[node name="TextureRect" type="TextureRect" parent="Button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_1qcct")
+
+[node name="quit_btn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_b0x3g")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ip65t")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_fkecd")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_qdyj5")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_polw3")
+
+[node name="TextureRect" type="TextureRect" parent="quit_btn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_jsohy")
+
+[node name="VersionPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_de5gq")
+
+[node name="Label" type="Label" parent="VersionPanel"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "v 0.0.1"
+label_settings = SubResource("LabelSettings_1qcct")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[connection signal="item_rect_changed" from="." to="." method="_on_item_rect_changed"]
+[connection signal="pressed" from="quit_btn" to="." method="_on_quit_btn_pressed"]

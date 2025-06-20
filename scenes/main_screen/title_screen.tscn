@@ -1,0 +1,288 @@
+[gd_scene load_steps=42 format=3 uid="uid://bpgxrp7si8vvb"]
+
+[ext_resource type="Shader" uid="uid://bu75cjdxjbv54" path="res://scenes/main_screen/moving_arcs_sharder.gdshader" id="2_8pinb"]
+[ext_resource type="Texture2D" uid="uid://xiayykdp3ell" path="res://assets/ui/dashboard.png" id="2_84mke"]
+[ext_resource type="StyleBox" uid="uid://bx81yjdb6rsrl" path="res://syles/style_debug_container.tres" id="3_ihdm0"]
+[ext_resource type="Texture2D" uid="uid://cd4yq2fpj8lax" path="res://assets/ui/arcs1.png" id="4_ip65t"]
+[ext_resource type="Texture2D" uid="uid://bxiux2byxhgfc" path="res://assets/ui/arcs2.png" id="6_qdyj5"]
+[ext_resource type="PackedScene" uid="uid://dakg307uxfnua" path="res://scenes/main_screen/title.tscn" id="7_b0x3g"]
+
+[sub_resource type="GDScript" id="GDScript_8pinb"]
+resource_name = "title_screen"
+script/source = "extends PanelContainer
+
+
+func _ready() -> void:
+    pass
+    %ArcsBackground.show()
+    %ArcsBackground2.show()
+
+func adapt_to_screen(size:Vector2i, view_zoom:float):
+    %Title.adapt_to_screen()
+    %ArcsBackground.set_instance_shader_parameter(\"scale\",view_zoom)
+    %ArcsBackground.set_instance_shader_parameter(\"x_offset\",(size.x % 32)/2.0)
+    %ArcsBackground2.set_instance_shader_parameter(\"scale\",view_zoom)
+    %ArcsBackground2.set_instance_shader_parameter(\"x_offset\",(size.x % 64)/2.0)
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ip65t"]
+shader = ExtResource("2_8pinb")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_polw3"]
+shader = ExtResource("2_8pinb")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1qcct"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jsohy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wh8io"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v0tsf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n3gd5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_12fip"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tefeu"]
+atlas = ExtResource("2_84mke")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aj4bu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0ud3t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tpyym"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_keg04"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kisil"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1bsm4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g75hw"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_o6xl0"]
+load_path = "res://.godot/imported/dashboard.png-6043123cb5a0845bc437bee43344a086.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tipki"]
+atlas = SubResource("CompressedTexture2D_o6xl0")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rx0bo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dmjma"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ugtg0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_212kx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ajo0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fsyh4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6rnim"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85g3d"]
+atlas = SubResource("CompressedTexture2D_o6xl0")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6fuk4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2cwcd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o3606"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wwgah"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vh6r2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kagjs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_choun"]
+atlas = SubResource("CompressedTexture2D_o6xl0")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ifm01"]
+
+[node name="TitleScreen" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_ihdm0")
+script = SubResource("GDScript_8pinb")
+
+[node name="ArcsBackground" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_ip65t")
+instance_shader_parameters/scale = 2.10000003129252
+instance_shader_parameters/speed = 10.0
+instance_shader_parameters/x_offset = -51.0
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("4_ip65t")
+stretch_mode = 1
+
+[node name="ArcsBackground2" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_polw3")
+instance_shader_parameters/scale = 2.10000003129252
+instance_shader_parameters/speed = 20.0
+instance_shader_parameters/x_offset = -9.0
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_qdyj5")
+stretch_mode = 1
+
+[node name="FlowContainer" type="FlowContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/h_separation = 96
+theme_override_constants/v_separation = 96
+alignment = 1
+last_wrap_alignment = 2
+
+[node name="Title" parent="FlowContainer" instance=ExtResource("7_b0x3g")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="FlowContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_right = 128
+
+[node name="GridContainer" type="GridContainer" parent="FlowContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 32
+columns = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="FlowContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1qcct")
+
+[node name="Button" type="Button" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jsohy")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wh8io")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_v0tsf")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n3gd5")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_12fip")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = SubResource("AtlasTexture_tefeu")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_aj4bu")
+text = "Play"
+label_settings = SubResource("LabelSettings_0ud3t")
+horizontal_alignment = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="FlowContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tpyym")
+
+[node name="Button" type="Button" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_keg04")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_kisil")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1bsm4")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_g75hw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = SubResource("AtlasTexture_tipki")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rx0bo")
+text = "Ranking"
+label_settings = SubResource("LabelSettings_0ud3t")
+horizontal_alignment = 1
+
+[node name="PanelContainer3" type="PanelContainer" parent="FlowContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_dmjma")
+
+[node name="Button" type="Button" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ugtg0")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_212kx")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8ajo0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_fsyh4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6rnim")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer3"]
+layout_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer3/VBoxContainer2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = SubResource("AtlasTexture_85g3d")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer3/VBoxContainer2"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6fuk4")
+text = "Badges"
+label_settings = SubResource("LabelSettings_0ud3t")
+horizontal_alignment = 1
+
+[node name="PanelContainer4" type="PanelContainer" parent="FlowContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2cwcd")
+
+[node name="Button" type="Button" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_o3606")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wwgah")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vh6r2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_kagjs")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer4"]
+layout_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer4/VBoxContainer3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = SubResource("AtlasTexture_choun")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="FlowContainer/MarginContainer/GridContainer/PanelContainer4/VBoxContainer3"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ifm01")
+text = "About"
+label_settings = SubResource("LabelSettings_0ud3t")
+horizontal_alignment = 1

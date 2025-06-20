@@ -1,0 +1,113 @@
+[gd_scene load_steps=11 format=3 uid="uid://dakg307uxfnua"]
+
+[ext_resource type="Texture2D" uid="uid://rlr88x6pjfxe" path="res://assets/ui/banners.png" id="1_wosw1"]
+[ext_resource type="PackedScene" uid="uid://bdc4rcjbcf6ls" path="res://scenes/main_screen/flame.tscn" id="2_p6dhs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_18ltn"]
+
+[sub_resource type="GDScript" id="GDScript_ds13r"]
+resource_name = "title"
+script/source = "extends PanelContainer
+
+func adapt_to_screen():
+    %Flame.reset_flame()
+    %Flame2.reset_flame()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbgi4"]
+atlas = ExtResource("1_wosw1")
+region = Rect2(0, 0, 128, 70.55709)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ip65t"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkecd"]
+atlas = ExtResource("1_wosw1")
+region = Rect2(0, 168, 128, 56)
+
+[sub_resource type="Animation" id="Animation_polw3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitleShine:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qdyj5"]
+resource_name = "title"
+length = 7.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TitleShine:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 3, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1.4640825, 0.06470411, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.76862746), Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_de5gq"]
+_data = {
+&"RESET": SubResource("Animation_polw3"),
+&"title": SubResource("Animation_qdyj5")
+}
+
+[node name="Title" type="PanelContainer"]
+theme_override_styles/panel = SubResource("StyleBoxEmpty_18ltn")
+script = SubResource("GDScript_ds13r")
+
+[node name="PixelDungonLogo" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(256, 140)
+layout_mode = 2
+texture = SubResource("AtlasTexture_tbgi4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleShine" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("CanvasItemMaterial_ip65t")
+custom_minimum_size = Vector2(256, 140)
+layout_mode = 2
+texture = SubResource("AtlasTexture_fkecd")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_top = 9
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/separation = 110
+
+[node name="Flame" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_p6dhs")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Flame2" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_p6dhs")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_de5gq")
+}
+autoplay = "title"

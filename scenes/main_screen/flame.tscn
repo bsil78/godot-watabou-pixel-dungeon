@@ -1,0 +1,228 @@
+[gd_scene load_steps=18 format=3 uid="uid://bdc4rcjbcf6ls"]
+
+[ext_resource type="Texture2D" uid="uid://cuqb8qex45uve" path="res://assets/effets/fireball.png" id="1_ktous"]
+
+[sub_resource type="GDScript" id="GDScript_ktous"]
+script/source = "class_name Flame extends Control
+
+
+func reset_flame():
+    %GPUParticles2D.restart(true)
+    %GPUParticles2D2.restart(true)
+"
+
+[sub_resource type="Animation" id="Animation_hmmd7"]
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("./TextureRect2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("./TextureRect3:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_x50ei"]
+resource_name = "flames"
+length = 4.0
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("./TextureRect2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.5707963267948966, -3.141592653589793, -4.71238898038469, -6.281439977927592]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("./TextureRect3:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 0.99, 1, 1.25, 1.5, 1.75, 1.99, 2, 2.25, 2.5, 2.75, 2.99, 3, 3.25, 3.5, 3.75, 3.99, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.5707963267948966, 3.141592653589793, 4.71238898038469, 6.281439977927594, 0.0, 1.5707963267948966, 3.141592653589793, 4.71238898038469, 6.281439977927594, 0.0, 1.5707963267948966, 3.141592653589793, 4.71238898038469, 6.281439977927594, 0.0, 1.5707963267948966, 3.141592653589793, 4.71238898038469, 6.281439977927594, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rp4rw"]
+_data = {
+&"RESET": SubResource("Animation_hmmd7"),
+&"flames": SubResource("Animation_x50ei")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qba0e"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_df7ss"]
+atlas = ExtResource("1_ktous")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jcynh"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pyl84"]
+atlas = ExtResource("1_ktous")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ktous"]
+blend_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktous"]
+atlas = ExtResource("1_ktous")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="Curve" id="Curve_ktous"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.08280256, 1), 0.0, 0.0, 0, 0, Vector2(0.25902337, 1), 0.0, 0.0, 0, 0, Vector2(0.7133758, 0.63138974), -1.8209596, -1.8209596, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_x50ei"]
+curve = SubResource("Curve_ktous")
+
+[sub_resource type="Curve" id="Curve_hmmd7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.07643313, 0.51198083), 9.2377615, 9.2377615, 0, 0, Vector2(0.13375798, 1), 2.445287, 2.445287, 0, 0, Vector2(0.4309979, 0.9948083), 1.0909741, 1.0909741, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_rp4rw"]
+curve = SubResource("Curve_hmmd7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cyk1v"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+emission_shape_offset = Vector3(0, 3, 0)
+emission_shape = 3
+emission_box_extents = Vector3(10, 5, 1)
+direction = Vector3(0, -1, 0)
+spread = 5.0
+flatness = 1.0
+initial_velocity_min = 8.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 1, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = -2.2351742e-06
+attractor_interaction_enabled = false
+scale_min = 0.7
+scale_max = 0.9
+scale_curve = SubResource("CurveTexture_rp4rw")
+alpha_curve = SubResource("CurveTexture_x50ei")
+turbulence_noise_strength = 4.0
+turbulence_noise_scale = 0.5
+turbulence_noise_speed = Vector3(1, 0, 0)
+turbulence_noise_speed_random = 1.0
+turbulence_influence_max = 0.3
+turbulence_initial_displacement_min = 0.10000149
+turbulence_initial_displacement_max = 0.3000015
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x50ei"]
+atlas = ExtResource("1_ktous")
+region = Rect2(96, 0, 32, 32)
+
+[node name="Flame" type="Control"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 3
+anchors_preset = 0
+pivot_offset = Vector2(32, 32)
+script = SubResource("GDScript_ktous")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
+libraries = {
+&"": SubResource("AnimationLibrary_rp4rw")
+}
+autoplay = "flames"
+speed_scale = 0.5
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.8509804)
+texture_filter = 2
+material = SubResource("CanvasItemMaterial_qba0e")
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+rotation = -6.1378736
+pivot_offset = Vector2(32, 32)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource("AtlasTexture_df7ss")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.8666667)
+texture_filter = 2
+material = SubResource("CanvasItemMaterial_jcynh")
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -16.0
+offset_right = 17.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 5.748623
+scale = Vector2(1.5, 1.5)
+pivot_offset = Vector2(16, 16)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = SubResource("AtlasTexture_pyl84")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.22352941)
+texture_filter = 2
+material = SubResource("CanvasItemMaterial_ktous")
+position = Vector2(32, 32)
+amount = 20
+texture = SubResource("AtlasTexture_ktous")
+lifetime = 10.0
+preprocess = 10.0
+randomness = 1.0
+visibility_rect = Rect2(-40, -80, 80, 100)
+process_material = SubResource("ParticleProcessMaterial_cyk1v")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.27450982)
+texture_filter = 2
+material = SubResource("CanvasItemMaterial_ktous")
+position = Vector2(32, 32)
+amount = 20
+texture = SubResource("AtlasTexture_x50ei")
+lifetime = 10.0
+preprocess = 10.0
+randomness = 1.0
+visibility_rect = Rect2(-40, -80, 80, 100)
+process_material = SubResource("ParticleProcessMaterial_cyk1v")

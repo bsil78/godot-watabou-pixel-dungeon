@@ -1,10 +1,92 @@
-[gd_scene load_steps=3 format=3 uid="uid://b17nrm0csr353"]
+[gd_scene load_steps=5 format=3 uid="uid://b17nrm0csr353"]
 
 [ext_resource type="Script" uid="uid://cfc1f2tg32rts" path="res://scenes/main.gd" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://diblb1injdxb8" path="res://scenes/badges.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://diblb1injdxb8" path="res://scenes/main_screen/main_screen.tscn" id="2_0wfyh"]
+[ext_resource type="AudioStream" uid="uid://bn8c12x1rhksv" path="res://assets/musics/game.mp3" id="3_sugp2"]
+
+[sub_resource type="GDScript" id="GDScript_sugp2"]
+resource_name = "screen_management"
+script/source = "extends Node
+
+const minimum_portrait_size = Vector2(128,224)
+const minimum_landscape_size = Vector2(224,160)
+
+@onready var WINDOW_ID := get_window().get_window_id()
+
+@export_range(1,10,0.1) var zoom_factor := 4
+
+signal screen_parameters_changed(new_window_size,new_zoom)
+
+var fullscreen:=true :
+    set(value):
+        if value==fullscreen: return
+        fullscreen=value
+        _resize()
+
+func _ready():
+    if not OS.has_feature(\"template\"):
+        print(\"Development mode\")
+        fullscreen=false
+    else:
+        _resize()
+
+func _resize():
+    var SCREEN := get_window().current_screen
+    force_not_fullscreen()
+    var window_size:Vector2=DisplayServer.screen_get_size(SCREEN) if fullscreen else ((DisplayServer.screen_get_usable_rect(SCREEN).size*0.8) as Vector2i)
+    # size adjustment is needed for fullscreen on Windows in order to prevent switch to Fullscreen mode here...
+    DisplayServer.window_set_size(window_size+(Vector2(1,1) if fullscreen else Vector2.ZERO),WINDOW_ID)
+    var is_landscape = window_size.aspect()>1
+    var min_size = minimum_landscape_size if is_landscape else minimum_portrait_size
+    var calculated_ratio = window_size / min_size
+    var zoom :float = max(calculated_ratio.x,calculated_ratio.y)/zoom_factor
+    var scaling := window_size/zoom;
+    screen_parameters_changed.emit(window_size,zoom)
+    get_tree().root.set(\"content_scale_size\",scaling)
+    force_center_of_screen(SCREEN)
+    reset_window_mode()
+
+
+
+## because of Windows implementation that forces fullscreen mode if actually fullscreen
+func force_not_fullscreen():
+    get_window().position=Vector2(-1,-1)
+    DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP,false,WINDOW_ID)
+    DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+
+## because of Windows implementation that forces fullscreen mode if actually fullscreen
+func force_center_of_screen(p_screen:int):
+    DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+    DisplayServer.window_set_current_screen(p_screen,WINDOW_ID)
+    get_window().move_to_center()
+
+## because of Windows implementation that forces fullscreen mode if actually fullscreen
+func reset_window_mode():
+    DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN if fullscreen else DisplayServer.WINDOW_MODE_WINDOWED)
+    DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP,fullscreen,WINDOW_ID)
+
+
+func _input(event: InputEvent) -> void:
+    if event is InputEventKey:
+        if not OS.has_feature(\"template\"):
+            if event.is_action_pressed(&\"ui_fullscreen\"):
+                fullscreen = not fullscreen
+            if event.is_action_pressed(&\"ui_change_screen\"):
+                DisplayServer.window_set_current_screen((get_window().current_screen+1)%DisplayServer.get_screen_count(),WINDOW_ID)
+                _resize()
+"
 
 [node name="Main" type="Node"]
 script = ExtResource("1_o5qli")
 
-[node name="Badges" parent="." instance=ExtResource("2_0wfyh")]
+[node name="MainScreen" parent="." instance=ExtResource("2_0wfyh")]
 unique_name_in_owner = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_sugp2")
+autoplay = true
+
+[node name="ScreenManagement" type="Node" parent="."]
+script = SubResource("GDScript_sugp2")
+
+[connection signal="screen_parameters_changed" from="ScreenManagement" to="MainScreen" method="_on_screen_management_screen_parameters_changed"]
